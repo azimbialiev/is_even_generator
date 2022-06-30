@@ -1,0 +1,21 @@
+use std::io;
+
+fn main() {
+    println!("Enter a value: ");
+    let mut user_input = String::new();
+    io::stdin()
+        .read_line(&mut user_input)
+        .expect("failed to read from stdin");
+
+    let trimmed = user_input.trim();
+    match trimmed.parse::<u64>() {
+        Ok(value) => {
+            println!("your integer input: {}", value);
+            let result = is_even(value);
+            println!("is even: {result}");
+        }
+        Err(..) => println!("this was not an integer: {}", trimmed),
+    };
+}
+
+fn is_even(value: u64) -> bool {
