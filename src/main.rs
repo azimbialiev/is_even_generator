@@ -5,7 +5,7 @@ use std::io::{BufWriter, Write};
 
 fn main() {
     const OUT_PATH: &str = "./output";
-    const MAX_VALUE: u64 = 500000;
+    const MAX_VALUE: u64 = 10000000;
     let main_template = fs::read_to_string("./resources/main_template.txt").expect("Unable to read main_template");
     let out_file = OpenOptions::new()
         .write(true)
@@ -29,11 +29,12 @@ fn main() {
     out.flush().expect("Unable to flush output");
     let out_file_metadata = out.into_inner().unwrap().metadata().expect("Can't get output file metadata");
     println!("Output file size: {} Mb", (out_file_metadata.len() as f64 / 1000000 as f64));
-    Command::new("cmd")
+    let exit_status = Command::new("cmd")
         .current_dir(OUT_PATH)
         .args(&["/C", "cargo build --release --timings --verbose --verbose"])
         .status()
         .expect("Can't compile output");
+    println!("Build exit status: {}", exit_status.code().unwrap())
 }
 
 

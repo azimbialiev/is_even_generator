@@ -1,2 +1,6 @@
 /target
 Cargo.lock
+.idea
+/output/target
+/output/release
+/output/main.rs
